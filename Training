@@ -91,3 +91,6 @@ history=model.fit_generator(training_set,
 score = model.evaluate(test_set,verbose=0)
 print('test accuracy:', score[1])
 print("The model has successfully trained")
+from keras.models import save_model
+save_model(model,'D:/project/project__model1')
+print("Saving the model as project__model1")
