@@ -1,1 +1,43 @@
+from keras.preprocessing.image import ImageDataGenerator
+test_dir ='D:/AHCD/test'
+test_datagen =  ImageDataGenerator(
+    rescale = 1./255)
+test_set = test_datagen.flow_from_directory (test_dir, 
+target_size = (32, 32),
+    batch_size = 32,
+    class_mode='categorical',
+    shuffle='False',color_mode='grayscale')
+import numpy as np
+from keras.models import load_model
+model = load_model('D:/project/project__model1', compile = True)
+import keras
+from keras.preprocessing.image import load_img,img_to_array
+import os
+pred_dir='C:/AHCD/test/teh'
+filenames_full = []
+for dirpath, dirnames, filenames in os.walk(pred_dir):
+    for filename in filenames:
+        filenames_full.append(os.path.join(dirpath, filename))
+ 
+rows = (len(filenames_full) - 1) // 4 + 1
+plt.figure(figsize=(15, 5 * rows))
+for index, filename_full in enumerate(filenames_full):
+    plt.subplot(rows, 4, index + 1)
+    test_image = load_img(filename_full, target_size=(32, 32),color_mode='grayscale')
+    test_input = img_to_array(test_image)* ( 1. /255)
+    test_input = np.expand_dims(test_input, axis=0)
+    plt.imshow(test_image,cmap='gray')
+    prediction = model.predict(test_input)
+    prediction=prediction*100
+    res=np.argmax(prediction)
+    listcls = { 0 : 'alef', 1: 'bah', 2: 'teh', 3: 'theh', 4: 'jeem', 5 : 'hah', 6 : 'khah', 7 : 'dal', 8: 'dhal', 9: 'reh',
+         10 : 'zain', 11: 'seen', 12: 'sheen', 13: 'sad', 14: 'dad', 15 : 'tah', 16 : 'dah', 17 : 'ain', 18: 'ghain', 19: 'feh',
+         20 : 'gaf', 21: 'kaf', 22: 'lam', 23: 'meem', 24: 'noon', 25 : 'heh', 26 : 'waw', 27 : 'yeh'}
+    plt.title(listcls[res],fontweight='bold',fontsize=16)
+    plt.title(index,fontsize=14,loc='left',color='red')
+    lenn=len(filenames)
+    list2 = range(0, lenn)
+    f_dictionary = dict(zip(list2,filenames))
+    #print(f_dictionary)
+    plt.xlabel(f_dictionary[index],fontsize=14)
 
