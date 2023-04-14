@@ -9,4 +9,4 @@ Our model :
 ![model](https://user-images.githubusercontent.com/62550586/232156985-be269475-7009-4e1f-9d1c-b8515d131bb9.png)
 
 Confusion Matrix :
-![matrix](https://user-images.githubusercontent.com/62550586/232157823-4faa01d8-554d-4ca4-8cc5-55241b870b8d.png)
+
