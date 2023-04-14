@@ -1,1 +1,28 @@
-
+test_set.reset()
+y_pred = model.predict_generator(test_set)
+classes = test_set.classes[test_set.index_array]
+y_pred = np.argmax(y_pred, axis=-1)
+sum(y_pred==classes)/3360
+from sklearn.metrics import confusion_matrix
+confusion_mtx=confusion_matrix(test_set.classes[test_set.index_array],y_pred)
+import seaborn as sns
+f,ax = plt.subplots(figsize=(15, 10))
+labels=['alef', 'bah', 'teh', 'theh', 'jeem',  'hah', 'khah',  'dal',  'dhal',  'reh',
+         'zain', 'seen',  'sheen', 'sad', 'dad', 'tah',  'dah', 'ain', 'ghain', 'feh',
+         'gaf', 'kaf', 'lam',  'meem', 'noon',  'heh',  'waw',  'yeh']
+sns.heatmap(confusion_mtx, annot=True, linewidths=0.01, fmt='', ax=ax, xticklabels=labels, yticklabels=labels)
+plt.xlabel("Caractère classifié",fontsize=16,fontweight='bold')
+plt.ylabel("Vrai caractère",fontsize=16,fontweight='bold')
+plt.title("******Matrice de classification ******",fontsize=20,fontweight='bold')
+ax.set_yticklabels(labels,fontdict={'fontsize':14})
+ax.set_xticklabels(labels,fontdict={'fontsize':14})
+plt.show()
+rs=np.diag(confusion_mtx)
+print("correct_character:",rs)
+nt=[120,120,120,120,120,120,120,120,120,120,120,120,120,120,
+120,120,120,120,120,120,120,120,120,120,120,120,120,120]
+difference=[]
+ensemble = zip(nt, rs)
+for i, j in ensemble:
+    difference.append(i-j)
+print("incorrect_character:",difference)
