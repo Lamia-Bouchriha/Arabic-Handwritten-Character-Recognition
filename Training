@@ -31,7 +31,7 @@ for index, filename_full in enumerate(filenames_full):
     image_input=np.zeros((img_width, img_height,1), dtype=np.float32)
     input_shape=image_input.shape
 #print(input_shape)
-test_dir ='C:/Users/21625/Desktop/datcaracter/test'
+test_dir ='C:/test'
 filenames_full = []
 for dirpath, dirnames, filenames in os.walk(test_dir):
     for filename in filenames:
@@ -102,6 +102,4 @@ history=model.fit_generator(training_set,
 #Part5 -evaluation model
 score = model.evaluate(test_set,verbose=0)
 print('test accuracy:', score[1])
-#print(input_shape)
-print(history.history)
 print("The model has successfully trained")
