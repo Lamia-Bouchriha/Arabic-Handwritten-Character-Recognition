@@ -17,7 +17,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 epochs =60
 batch_size =32
 img_width, img_height = 32 ,32
-train_dir = 'C:/Users/21625/Desktop/datcaracter/train'
+train_dir = 'C:/train'
 filenames_full = []
 for dirpath, dirnames, filenames in os.walk(train_dir):
     for filename in filenames:
@@ -102,10 +102,6 @@ history=model.fit_generator(training_set,
 #Part5 -evaluation model
 score = model.evaluate(test_set,verbose=0)
 print('test accuracy:', score[1])
-print(input_shape)
-
-"""
+#print(input_shape)
 print(history.history)
-acc is the accuracy of a batch of training data and val_acc is the accuracy of a batch of testing data
-"""
 print("The model has successfully trained")
