@@ -4,4 +4,4 @@ I proposed a CNN model which is composed of four convolution layers, four Max Po
 
 AHCD dataset : https://www.kaggle.com/mloey1/ahcd1
 
-https://github.com/Lamia-Bouchriha/Standard-Arabic-Handwritten-Character-Recognition/issues/1#issue-1668960734
+
