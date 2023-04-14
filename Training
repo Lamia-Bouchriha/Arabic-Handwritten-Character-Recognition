@@ -3,21 +3,19 @@ from keras.preprocessing.image import load_img,img_to_array
 import os
 import glob as glob
 from PIL import Image
-import numpy as np #NumPy is a python library used for working with arrays.
-#NumPy enrichit le langage de programmation Python avec de puissantes structures de données, implémentant des matrices et tableaux multidimensionnels
-import matplotlib.pyplot as plt #  matplotlib is a python plotting (traçage) library
+import numpy as np 
+import matplotlib.pyplot as plt 
 from keras.models import Sequential
 from keras.layers import Dense, Dropout,GlobalAveragePooling2D
 from keras.layers import Conv2D, MaxPooling2D
 from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import History 
 history = History()
-# Just disables the warning, doesn't enable AVX/FMA
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 epochs =60
 batch_size =32
 img_width, img_height = 32 ,32
-train_dir = 'C:/train'
+train_dir = 'D:/AHCD/train'
 filenames_full = []
 for dirpath, dirnames, filenames in os.walk(train_dir):
     for filename in filenames:
@@ -27,11 +25,9 @@ for index, filename_full in enumerate(filenames_full):
     image = load_img(filename_full, target_size=(img_width, img_height))
     image_input = img_to_array(image)
     input_shape=image_input.shape
-#print(input_shape)
     image_input=np.zeros((img_width, img_height,1), dtype=np.float32)
     input_shape=image_input.shape
-#print(input_shape)
-test_dir ='C:/test'
+test_dir ='D:/AHCD/test'
 filenames_full = []
 for dirpath, dirnames, filenames in os.walk(test_dir):
     for filename in filenames:
@@ -41,10 +37,8 @@ for index, filename_full in enumerate(filenames_full):
     image = load_img(filename_full, target_size=(img_width, img_height))
     image_input = img_to_array(image)
     input_shape=image_input.shape
-    #print(input_shape)
     image_input=np.zeros((img_width, img_height,1), dtype=np.float32)
     input_shape=(image_input.shape)
-    #print(input_shape)
 nb_classes = len(glob.glob(train_dir + '/*'))
 #print("nb_classes:", nb_classes)
 nb_train_samples = 0
@@ -56,9 +50,6 @@ nb_test_samples = 0
 for r, dirs, files in os.walk(test_dir):
     for dr in dirs:
         nb_test_samples += len(glob.glob(os.path.join(r, dr + "/*")))
-#print("nb_test_samples:", nb_test_samples)  
-#Part2 -creation model CNN
-print(input_shape)
 model = Sequential()
 model.add(Conv2D(64,(3, 3), padding='same', kernel_initializer='uniform', activation='relu',input_shape=input_shape))
 model.add(MaxPooling2D(pool_size=(2, 2)))
@@ -76,7 +67,6 @@ model.add(GlobalAveragePooling2D())
 model.add(Dense(512,activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(nb_classes, activation='softmax'))
-# Part3  -Compiling the CNN
 model.compile(optimizer='adam',loss='categorical_crossentropy', metrics =['accuracy'])
 print("build model...")
 model.summary()
@@ -88,7 +78,6 @@ training_set = train_datagen.flow_from_directory(train_dir ,
 target_size = (img_width, img_height),
     batch_size = batch_size,
     class_mode='categorical',color_mode='grayscale')
-#load image as pixel array
 test_set = test_datagen.flow_from_directory (test_dir, 
 target_size = (img_width, img_height),
     batch_size = batch_size,
@@ -99,7 +88,6 @@ history=model.fit_generator(training_set,
         epochs = epochs,
         validation_data = test_set,
         validation_steps=nb_test_samples/batch_size)
-#Part5 -evaluation model
 score = model.evaluate(test_set,verbose=0)
 print('test accuracy:', score[1])
 print("The model has successfully trained")
